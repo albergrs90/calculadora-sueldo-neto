@@ -2,6 +2,7 @@ import React, { useState, useMemo } from "react";
 import "./App.css"; // Importamos los estilos desde el archivo App.css
 
 // --- IMPORTACIONES DE COMPONENTES ---
+// Asegúrate de que estos archivos existan en src/components/
 import { CalculatorIcon, InfoIcon } from "./components/Icons";
 import InputGroup from "./components/InputGroup";
 
@@ -75,7 +76,6 @@ const App = () => {
 
   // ------------------- LÓGICA DE CÁLCULO -------------------
   const resultados = useMemo(() => {
-    // ... (El resto de la lógica de useMemo se mantiene igual)
     const numericBrutoAnual = Number(brutoAnual) || 0;
 
     if (numericBrutoAnual <= 0) {
@@ -90,24 +90,17 @@ const App = () => {
       };
     }
 
-    // 1. Calcular el tipo de IRPF estimado (con la lógica mejorada)
     const retencionIRPF_Tipo = calcularRetencionIRPF(
       numericBrutoAnual,
       hijos,
       estadoCivil
     );
 
-    // 2. Calcular la Cotización a la Seguridad Social (SS) anual
     const cotizacionSS_Anual = numericBrutoAnual * COTIZACION_SS_BASE;
-
-    // 3. Calcular la Retención de IRPF anual
     const retencionIRPF_Anual = numericBrutoAnual * retencionIRPF_Tipo;
-
-    // 4. Calcular el Neto Anual
     const netoAnual =
       numericBrutoAnual - retencionIRPF_Anual - cotizacionSS_Anual;
 
-    // 5. Cálculos mensuales
     const numPagas = Number(pagas);
     const netoMensual = netoAnual / numPagas;
     const brutoMensual = numericBrutoAnual / numPagas;
@@ -141,12 +134,34 @@ const App = () => {
         <header className="app-header">
           <h1 className="main-title">
             <CalculatorIcon className="main-title-icon" />
-            Calculadora Sueldo Neto
+            Sueldo Neto
           </h1>
           <p className="app-subtitle">
             Calculadora rápida y <strong>estimada</strong> de salario neto anual
             en España (2024/2025).
           </p>
+
+          {/* NUEVO CONTENIDO PARA ADSENSE */}
+          <div className="introduccion-adsense">
+            <p>
+              Esta herramienta ha sido diseñada para ofrecer una **estimación
+              rápida y clara** de cuánto sueldo neto recibirás mensualmente en
+              España, descontando las retenciones de IRPF y las cotizaciones a
+              la Seguridad Social (SS). El IRPF (Impuesto sobre la Renta de las
+              Personas Físicas) es un impuesto progresivo que grava la renta
+              obtenida por las personas físicas durante un año natural.
+            </p>
+            <p>
+              Utilizamos los tramos fiscales vigentes para 2024 y 2025 para
+              simular la cuota que deberías pagar, ajustando tu retención
+              mensual a un tipo efectivo para evitar sorpresas en la declaración
+              anual. Recuerda que el cálculo final de una nómina es más complejo
+              y depende de tu Comunidad Autónoma, contrato y situaciones
+              personales específicas. **Consulta siempre a un asesor fiscal para
+              cálculos oficiales.**
+            </p>
+          </div>
+          {/* FIN NUEVO CONTENIDO */}
         </header>
 
         <main className="calculator-card">
@@ -164,7 +179,7 @@ const App = () => {
           {/* Sección de Datos de Cálculo */}
           <h3 className="section-title">Datos de Cálculo</h3>
 
-          {/* 1. Sueldo Bruto Anual (AHORA USA EL COMPONENTE IMPORTADO) */}
+          {/* 1. Sueldo Bruto Anual (Componente Importado) */}
           <InputGroup
             label="1. Sueldo Bruto Anual (€)"
             value={brutoAnual}
@@ -287,6 +302,57 @@ Aviso: El cálculo oficial de nómina es más complejo y depende de tu CCAA y co
             </div>
           </div>
 
+          {/* NUEVA SECCIÓN: METODOLOGÍA (para AdSense) */}
+          <div className="metodologia-section">
+            <h4 className="section-title">
+              Metodología de Cálculo Simplificada
+            </h4>
+            <p>
+              El cálculo se basa en la simulación de la Cuota Íntegra estatal
+              del IRPF, aplicando la escala general a la **Base Liquidable**,
+              que resulta de restar al Salario Bruto las deducciones básicas.
+            </p>
+
+            <h5 className="metodologia-subtitle">
+              1. Tramos de IRPF (2024/2025)
+            </h5>
+            <p>
+              Se aplica el gravamen a la base imponible reducida (Base
+              Liquidable) siguiendo la escala estándar de IRPF:
+            </p>
+            <ul className="tramos-list">
+              <li>Hasta 12.450 €: 19%</li>
+              <li>De 12.450 € a 20.200 €: 24%</li>
+              <li>De 20.200 € a 35.200 €: 30%</li>
+              <li>De 35.200 € a 60.000 €: 37%</li>
+              <li>De 60.000 € a 300.000 €: 45%</li>
+              <li>Más de 300.000 €: 47%</li>
+            </ul>
+
+            <h5 className="metodologia-subtitle">2. Deducciones Clave</h5>
+            <p>
+              Para obtener el tipo de retención efectivo, la herramienta
+              considera:
+            </p>
+            <ul>
+              <li>
+                **Reducción por Rendimientos del Trabajo:** Se aplica la
+                reducción general de 2.000 € sobre el bruto anual (Base
+                Imponible).
+              </li>
+              <li>
+                **Mínimo Personal y Familiar:** Se deduce el mínimo personal
+                (5.550 €) más las cantidades simplificadas por hijos y estado
+                civil, reduciendo la Base de Gravamen.
+              </li>
+              <li>
+                **Seguridad Social:** Se aplica la cotización fija del empleado
+                del **6.4%** sobre el Salario Bruto.
+              </li>
+            </ul>
+          </div>
+          {/* FIN METODOLOGÍA */}
+
           {/* Aviso Legal */}
           <p className="legal-notice">
             <strong>Aviso:</strong> Esta es una herramienta de estimación. Para
@@ -294,6 +360,19 @@ Aviso: El cálculo oficial de nómina es más complejo y depende de tu CCAA y co
             fiscal.
           </p>
         </main>
+        <footer className="app-footer">
+          <a href="/aviso-legal.html" target="_blank" rel="noopener noreferrer">
+            Aviso Legal
+          </a>
+          <span className="footer-separator">|</span>
+          <a
+            href="/politica-privacidad.html"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Política de Privacidad
+          </a>
+        </footer>
       </div>
     </div>
   );
