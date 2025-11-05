@@ -141,7 +141,7 @@ const App = () => {
         <header className="app-header">
           <h1 className="main-title">
             <CalculatorIcon className="main-title-icon" />
-            Sueldo Neto
+            Calculadora Sueldo Neto
           </h1>
           <p className="app-subtitle">
             Calculadora rápida y <strong>estimada</strong> de salario neto anual
