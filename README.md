@@ -38,7 +38,7 @@ Asegúrate de tener [Node.js](https://nodejs.org/es/) instalado.
 
 1.  Clona este repositorio:
     ```bash
-    git clone [https://github.com/TU_USUARIO/calculadora-sueldo-neto.git](https://github.com/TU_USUARIO/calculadora-sueldo-neto.git)
+    git clone [https://github.com/TU_USUARIO/calculadora-sueldo-neto.git](https://github.com/albergrs90/calculadora-sueldo-neto.git)
     ```
 2.  Navega al directorio del proyecto:
     ```bash
@@ -55,4 +55,4 @@ Asegúrate de tener [Node.js](https://nodejs.org/es/) instalado.
     ```bash
     npm run dev
     ```
-2.  La aplicación se abrirá en tu navegador. Normalmente en `http://localhost:5173/`.
+2.  La aplicación se abrirá en tu navegador.
