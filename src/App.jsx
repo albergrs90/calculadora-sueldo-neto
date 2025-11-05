@@ -1,49 +1,9 @@
-import React, { useState, useEffect, useMemo, useRef } from "react";
+import React, { useState, useMemo } from "react";
 import "./App.css"; // Importamos los estilos desde el archivo App.css
 
-// Componente: Icono de Calculadora (SVG in-line)
-const CalculatorIcon = (props) => (
-  <svg
-    fill="none"
-    viewBox="0 0 24 24"
-    strokeWidth={2}
-    stroke="currentColor"
-    {...props}
-  >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      d="M10.5 6a7.5 7.5 0 1 0 7.5 7.5h-7.5V6z"
-    />
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      d="M13.5 10.5H21A7.5 7.5 0 0 0 13.5 3v7.5z"
-    />
-  </svg>
-);
-
-// Componente: Icono de Información (SVG in-line)
-const InfoIcon = (props) => (
-  <svg
-    fill="none"
-    viewBox="0 0 24 24"
-    strokeWidth={2}
-    stroke="currentColor"
-    {...props}
-  >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      d="M11.25 11.25l.041-.02a.75.75 0 0 1 1.06 0l.041.02m-1.06 0a.75.75 0 1 1-1.06 0m1.06 0v3.75m0 3.75h.008v.008H12v-.008z"
-    />
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      d="M3.75 12a8.25 8.25 0 1 1 16.5 0 8.25 8.25 0 0 1-16.5 0z"
-    />
-  </svg>
-);
+// --- IMPORTACIONES DE COMPONENTES ---
+import { CalculatorIcon, InfoIcon } from "./components/Icons";
+import InputGroup from "./components/InputGroup";
 
 // --- T A B L A S S I M P L I F I C A D A S ---
 const COTIZACION_SS_BASE = 0.064; // Cotización SS 6.4%
@@ -60,7 +20,6 @@ const TRAMOS_IRPF = [
 
 /**
  * Función que calcula una retención de IRPF estimada de forma más precisa.
- * Simula el cálculo de la cuota íntegra estatal y se divide por el Bruto Anual.
  */
 const calcularRetencionIRPF = (brutoAnual, hijos, estadoCivil) => {
   if (brutoAnual <= 0) return 0;
@@ -105,102 +64,6 @@ const calcularRetencionIRPF = (brutoAnual, hijos, estadoCivil) => {
 };
 
 /**
- * Componente reutilizable para la entrada de Sueldo Bruto con slider
- */
-const InputGroup = ({
-  label,
-  value,
-  unit,
-  onValueChange,
-  max = 150000,
-  step = 100,
-}) => {
-  // Estado local para el campo de texto (para manejar la entrada sin formato)
-  const [textValue, setTextValue] = useState(String(value));
-  const inputRef = useRef(null);
-
-  useEffect(() => {
-    // Sincroniza el estado global (value) con el estado local de texto (textValue)
-    // SOLO si el input no está enfocado
-    if (
-      String(value) !== textValue &&
-      document.activeElement !== inputRef.current
-    ) {
-      setTextValue(String(value));
-    }
-  }, [value, textValue]);
-
-  // Maneja el cambio en el campo de texto (solo permite números)
-  const handleTextChange = (e) => {
-    const input = e.target.value.replace(/[^0-9]/g, "");
-    setTextValue(input);
-    const numValue = Number(input);
-    // Actualiza el estado global solo si es un número válido
-    if (Number.isFinite(numValue)) {
-      onValueChange(Math.min(max, Math.max(0, numValue)));
-    }
-  };
-
-  // Maneja la pérdida de foco (Blur) para normalizar y clamp el valor
-  const handleBlur = () => {
-    const numValue = Number(textValue) || 0;
-    const clamped = Math.min(max, Math.max(0, numValue));
-    onValueChange(clamped);
-    setTextValue(String(clamped));
-  };
-
-  // Maneja el cambio en el slider
-  const handleSliderChange = (e) => {
-    const numValue = Number(e.target.value);
-    onValueChange(numValue);
-  };
-
-  return (
-    <div className="input-group">
-      <label className="input-label flex-between mb-2">{label}</label>
-
-      <div className="input-field-wrapper">
-        <input
-          ref={inputRef}
-          type="text"
-          pattern="[0-9]*"
-          value={textValue}
-          onChange={handleTextChange}
-          onBlur={handleBlur}
-          min="0"
-          max={max}
-          step="100"
-          className="input-text"
-          placeholder="Ej: 25500"
-        />
-        <span className="input-unit">{unit}</span>
-      </div>
-
-      {/* Slider */}
-      <input
-        type="range"
-        min="0"
-        max={max}
-        step={step}
-        value={value}
-        onChange={handleSliderChange}
-        className="input-slider"
-      />
-      <div className="slider-range-labels">
-        <span>0 {unit}</span>
-        <span>
-          {new Intl.NumberFormat("es-ES", {
-            minimumFractionDigits: 0,
-            maximumFractionDigits: 0,
-          }).format(max)}{" "}
-          {unit}
-        </span>
-      </div>
-    </div>
-  );
-};
-
-/**
  * Componente principal de la aplicación.
  */
 const App = () => {
@@ -210,10 +73,9 @@ const App = () => {
   const [hijos, setHijos] = useState(0);
   const [estadoCivil, setEstadoCivil] = useState("SOLTERO");
 
-  // No necesitamos el estado 'isReady' ya que el CSS es externo
-
   // ------------------- LÓGICA DE CÁLCULO -------------------
   const resultados = useMemo(() => {
+    // ... (El resto de la lógica de useMemo se mantiene igual)
     const numericBrutoAnual = Number(brutoAnual) || 0;
 
     if (numericBrutoAnual <= 0) {
@@ -261,7 +123,7 @@ const App = () => {
       cotizacionSS_Mensual,
       retencionIRPF_Mensual,
     };
-  }, [brutoAnual, pagas, hijos, estadoCivil]); // Recalcula si cambian estos estados
+  }, [brutoAnual, pagas, hijos, estadoCivil]);
 
   // ------------------- FUNCIÓN DE FORMATO -------------------
   const formatEuro = (value) =>
@@ -302,7 +164,7 @@ const App = () => {
           {/* Sección de Datos de Cálculo */}
           <h3 className="section-title">Datos de Cálculo</h3>
 
-          {/* 1. Sueldo Bruto Anual */}
+          {/* 1. Sueldo Bruto Anual (AHORA USA EL COMPONENTE IMPORTADO) */}
           <InputGroup
             label="1. Sueldo Bruto Anual (€)"
             value={brutoAnual}
