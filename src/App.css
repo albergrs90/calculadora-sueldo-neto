@@ -1,0 +1,405 @@
+/* Variables de Color (Basado en la paleta de la captura) */
+:root {
+  --color-primary: #4f46e5; /* Indigo-600 */
+  --color-primary-dark: #3730a3; /* Indigo-700 */
+  --color-secondary-light: #eef2ff; /* Indigo-50 */
+  --color-text-dark: #1f2937; /* Gray-800 */
+  --color-text-medium: #4b5563; /* Gray-600 */
+  --color-bg-light: #f9fafb; /* Gray-50 */
+  --color-card-bg: #ffffff;
+  --color-shadow: rgba(0, 0, 0, 0.1);
+  --color-red: #dc2626; /* Red-600 */
+  --font-stack: "Inter", system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+/* General y Reset */
+.app-container {
+  min-height: 100vh;
+  background-color: var(--color-bg-light);
+  font-family: var(--font-stack);
+  padding: 1rem; /* p-4 */
+  /* La transición de opacidad se puede mantener si deseas un efecto de fade-in al cargar,
+     aunque con CSS externo no es tan simple sin JS. Lo dejaré solo por consistencia de clases. */
+  transition: opacity 0.7s;
+  opacity: 1; /* Se asume que el contenedor está listo al cargar el CSS */
+}
+
+/* Si quieres mantener la transición de fade-in con una clase 'ready' inyectada por JS: */
+/*
+.app-container {
+  ...
+  transition: opacity 0.7s;
+  opacity: 0;
+}
+.app-container.ready {
+  opacity: 1;
+}
+*/
+
+.main-wrapper {
+  margin: 0 auto;
+  padding: 2rem 0; /* pt-8 */
+  max-width: 512px; /* max-w-lg */
+}
+
+@media (min-width: 640px) {
+  /* sm:p-8 */
+  .main-wrapper {
+    padding: 2rem;
+  }
+}
+
+/* Header/Título */
+.app-header {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding-top: 2rem;
+}
+
+.main-title {
+  font-size: 2.25rem; /* 4xl */
+  line-height: 1;
+  font-weight: 900; /* extabold */
+  color: var(--color-primary-dark); /* indigo-700 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.main-title-icon {
+  width: 2.5rem; /* w-10 */
+  height: 2.5rem; /* h-10 */
+  margin-right: 0.75rem; /* mr-3 */
+  color: var(--color-primary);
+}
+
+.app-subtitle {
+  margin-top: 0.5rem; /* mt-2 */
+  color: var(--color-text-medium);
+  font-size: 1.125rem; /* lg */
+}
+
+.app-subtitle strong {
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+/* Tarjeta Principal */
+.calculator-card {
+  background-color: var(--color-card-bg);
+  padding: 1.5rem; /* p-6 */
+  border-radius: 1.5rem; /* rounded-3xl */
+  box-shadow: 0 20px 25px -5px var(--color-shadow),
+    0 8px 10px -6px var(--color-shadow); /* shadow-2xl */
+}
+
+/* Tarjeta de Resultado */
+.result-box {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding: 1.5rem; /* p-6 */
+  background-color: var(--color-secondary-light);
+  border-radius: 1rem; /* rounded-2xl */
+  border: 1px solid #c7d2fe; /* border-indigo-200 */
+}
+
+.result-label {
+  font-size: 0.875rem; /* sm */
+  font-weight: 500; /* medium */
+  color: var(--color-primary-dark); /* indigo-700 */
+  text-transform: uppercase;
+  letter-spacing: 0.05em; /* tracking-wider */
+}
+
+.result-neto-mensual {
+  font-size: 3rem; /* 5xl */
+  font-weight: 900; /* black */
+  margin-top: 0.5rem; /* mt-2 */
+  color: var(--color-primary-dark); /* indigo-800 */
+}
+
+.result-neto-anual {
+  font-size: 0.875rem; /* sm */
+  color: var(--color-text-medium);
+  margin-top: 0.5rem; /* mt-2 */
+}
+
+.result-neto-anual strong {
+  font-weight: 600; /* font-semibold */
+}
+
+/* Sección de Datos de Cálculo */
+.section-title {
+  font-size: 1.25rem; /* xl */
+  font-weight: 700; /* bold */
+  color: var(--color-text-dark);
+  margin-bottom: 1.5rem; /* mb-6 */
+  border-bottom: 1px solid #e5e7eb; /* border-gray-200 */
+  padding-bottom: 0.5rem; /* pb-2 */
+}
+
+/* Controles de Grupo (InputGroup) */
+.input-group {
+  margin-bottom: 1.5rem; /* mb-6 */
+  padding: 1rem; /* p-4 */
+  background-color: rgba(255, 255, 255, 0.5); /* bg-white/50 */
+  border-radius: 0.75rem; /* rounded-xl */
+  box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06); /* shadow-inner */
+  border: 1px solid #f3f4f6; /* border-gray-100 */
+}
+
+.input-label {
+  font-size: 0.875rem; /* sm */
+  font-weight: 600; /* semibold */
+  color: var(--color-text-medium);
+  display: block;
+}
+
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+}
+
+.input-field-wrapper {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem; /* mb-4 */
+  gap: 0.5rem;
+}
+
+.input-text {
+  width: 100%;
+  font-size: 1.125rem; /* lg */
+  font-weight: 700; /* bold */
+  color: var(--color-text-dark);
+  background-color: var(--color-card-bg);
+  border: 1px solid #d1d5db; /* border-gray-300 */
+  border-radius: 0.5rem; /* rounded-lg */
+  padding: 0.75rem; /* p-3 */
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); /* shadow-sm */
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.input-text:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  border-color: var(--color-primary); /* focus:border-indigo-500 */
+  box-shadow: 0 0 0 3px #c7d2fe; /* focus:ring-indigo-500 */
+}
+
+.input-unit {
+  font-size: 1.25rem; /* xl */
+  font-weight: 700; /* bold */
+  color: var(--color-primary); /* indigo-600 */
+  flex-shrink: 0;
+}
+
+/* Estilos del Slider (Adaptación compleja de Tailwind) */
+.input-slider {
+  width: 100%;
+  height: 0.5rem; /* h-2 */
+  background-color: #e5e7eb; /* bg-gray-200 */
+  border-radius: 0.5rem; /* rounded-lg */
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+  margin-top: 0.5rem;
+}
+
+.input-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 1rem; /* w-4 */
+  height: 1rem; /* h-4 */
+  background-color: var(--color-primary);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+
+.input-slider::-moz-range-thumb {
+  width: 1rem; /* w-4 */
+  height: 1rem; /* h-4 */
+  background-color: var(--color-primary);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+
+.slider-range-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem; /* xs */
+  color: #6b7280; /* text-gray-500 */
+  margin-top: 0.25rem; /* mt-1 */
+}
+
+/* Botones de Pagas/Estado Civil */
+.pagas-buttons,
+.estado-civil-buttons {
+  display: flex;
+  gap: 1rem; /* space-x-4 */
+  padding: 0.75rem; /* p-3 */
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 0.75rem;
+  box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+}
+
+.btn-opcion {
+  flex: 1 1 0%; /* flex-1 */
+  padding: 0.75rem 1rem; /* py-3 */
+  border-radius: 0.75rem; /* rounded-xl */
+  font-weight: 700; /* bold */
+  transition: all 0.2s;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -2px rgba(0, 0, 0, 0.06); /* shadow-md */
+  cursor: pointer;
+  border: none;
+}
+
+.btn-opcion.small {
+  font-size: 0.875rem; /* text-sm */
+}
+
+/* Estado Inactivo */
+.btn-opcion.inactive {
+  background-color: #f3f4f6; /* gray-100 */
+  color: #4b5563; /* gray-700 */
+}
+.btn-opcion.inactive:hover {
+  background-color: #eef2ff; /* indigo-100 */
+  color: #1e40af; /* indigo-800 */
+}
+
+/* Estado Activo */
+.btn-opcion.active {
+  background-color: var(--color-primary); /* indigo-600 */
+  color: white;
+}
+.btn-opcion.active:hover {
+  background-color: var(--color-primary-dark); /* indigo-700 */
+}
+
+/* Controles de Hijos (Incremento/Decremento) */
+.hijos-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem; /* space-x-4 */
+  padding: 0.75rem;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 0.75rem;
+  box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+}
+
+.hijos-btn {
+  padding: 0.75rem;
+  background-color: #e5e7eb; /* gray-200 */
+  border-radius: 9999px; /* rounded-full */
+  font-weight: 700;
+  color: #4b5563;
+  transition: background-color 0.2s;
+  width: 2.5rem; /* w-10 */
+  height: 2.5rem; /* h-10 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: none;
+  flex-shrink: 0;
+}
+
+.hijos-btn:hover {
+  background-color: #d1d5db; /* gray-300 */
+}
+
+.hijos-count {
+  font-size: 1.5rem; /* 2xl */
+  font-weight: 900; /* black */
+  color: var(--color-primary-dark);
+  width: 2.5rem; /* w-10 */
+  text-align: center;
+}
+
+/* Desglose de Cálculo */
+.desglose-section {
+  margin-top: 2rem; /* mt-8 */
+  padding-top: 1rem; /* pt-4 */
+  border-top: 1px solid #e5e7eb; /* border-gray-200 */
+}
+
+.desglose-title {
+  font-size: 1.125rem; /* lg */
+  font-weight: 700; /* bold */
+  color: var(--color-text-dark);
+  margin-bottom: 1rem; /* mb-4 */
+  display: flex;
+  align-items: center;
+}
+
+.info-icon {
+  margin-left: 0.5rem;
+  width: 1.25rem; /* w-5 */
+  height: 1.25rem; /* h-5 */
+  color: var(--color-primary);
+  cursor: pointer;
+}
+
+.desglose-item-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem; /* space-y-3 */
+  font-size: 0.875rem; /* text-sm */
+}
+
+.desglose-item {
+  display: flex;
+  justify-content: space-between;
+  color: var(--color-text-medium);
+}
+
+.desglose-item span:last-child {
+  font-weight: 800; /* font-extrabold */
+  font-size: 1rem; /* text-base */
+}
+
+/* Deducciones (IRPF / SS) */
+.deduccion {
+  color: var(--color-red);
+}
+.deduccion span:last-child {
+  font-weight: 600; /* font-semibold */
+}
+
+.item-bruto {
+  border-top: 1px dashed #d1d5db; /* border-dashed pt-3 border-gray-300 */
+  padding-top: 0.75rem;
+}
+
+/* Resultado Neto Final */
+.neto-final {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.5rem; /* 2xl */
+  font-weight: 900; /* extabold */
+  padding-top: 0.75rem; /* pt-3 */
+  border-top: 2px solid var(--color-primary); /* border-t-2 border-indigo-500 */
+  margin-top: 0.75rem; /* mt-3 */
+  color: var(--color-primary-dark); /* text-indigo-700 */
+}
+
+/* Aviso Legal */
+.legal-notice {
+  margin-top: 2rem; /* mt-8 */
+  font-size: 0.75rem; /* xs */
+  color: #6b7280; /* text-gray-500 */
+  text-align: center;
+  padding: 0.75rem; /* p-3 */
+  background-color: #f3f4f6; /* gray-100 */
+  border-radius: 0.5rem; /* rounded-lg */
+}
+
+.legal-notice strong {
+  font-weight: 700;
+}
